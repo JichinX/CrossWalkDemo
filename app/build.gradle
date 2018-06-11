@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply from: 'https://gitee.com/Sir_XU/codes/qmpdo91yxb8lan04z2frk91/raw?blob_name=package'
+
 repositories {
     maven {
         url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
@@ -13,14 +15,15 @@ android {
         applicationId "me.xujichang.crosswalkdemo"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 101000
+        versionName "1.0.1.0"
         multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -29,6 +32,6 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
     implementation project(':crosswalksdk')
 }
