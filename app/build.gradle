@@ -15,8 +15,8 @@ android {
         applicationId "me.xujichang.crosswalkdemo"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 10101
-        versionName "1.0.1.1"
+        versionCode 10102
+        versionName "1.0.1.2"
         multiDexEnabled true
     }
     buildTypes {

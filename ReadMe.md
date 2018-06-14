@@ -82,7 +82,7 @@ js层面也只是从ur请求，转换为prompt请求
      ...
      ...
 ```
-#### 三、默认协议方法介绍
+#### 三、协议方法介绍
 ##### 1. 默认协议（DefaultInterface）不算是协议
 ```js
 DefaultInterface.sayHello();
@@ -93,15 +93,100 @@ sayHello为方法名，可以携带参数
 
 *待根据需求进行补充*
 ##### 2. codvision协议
-2.1.1 格式举例：
+2.1 sayHello测试：
 ```js 
 codvision://sayHello?name=xujichang
 ```
 说明：
-codvision为解析类型，
-sayHello为对应方法的Key,
-name=xujichang表示sayHello对应的方法的参数为name，值为xujichang
+>codvision 为解析类型    
+>sayHello 为对应方法标志   
+>name=xujichang 表示sayHello对应的方法的参数为name，值为xujichang
 
+2.2 **obtainFile**,获取手机内文件
+```html
+codvision://obtainFile?type=image&[mine_type=?]
+```
+说明：   
+>obtainFile 方法标志   
+type为获取文件的类型，其值可以为image、video、audio、txt，其中 image已实现。
+mime_type 可选，表示所需文件的具体类型，若与type冲突，以type为准
+
+返回数据：   
+正确
+```json
+{
+  "code": 200,
+  "data": {
+    "locPath": "/storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg",
+    "status": 1,
+    "timeStamp": 1528962416382
+  },
+  "msg": "成功"
+}
+```
+错误
+```json
+{
+  "code": 300,
+  "data": {
+    "status": 3,
+    "timeStamp": 1528962497792
+  },
+  "msg": "对象或集合为空"
+}
+```
+2.3 **obtainLocation**获取手机位置信息
+```
+codvision://obtainLocation?type=1
+```
+说明：  
+>obtainLocation 方法标志  
+>type 请求方式   
+>立即请求-表示 取手机中缓存的上次获取的位置信息    
+>重新请求-表示 需要重新调用位置获取方法，需要一段时间。
+
+返回数据：   
+正确
+```json
+{
+  "code": 200,
+  "data": {
+    "lat": 120.12313456464,
+    "lng": 30.156464
+  },
+  "msg": "成功"
+}
+```
+错误
+```json
+{
+  "code": 100,
+  "msg": "请求的操作被取消"
+}
+```
+2.4 显示文件信息
+```
+codvision://[img|]/...
+```
+说明：     
+因机制原因，并不能根据类似于"/storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg"的路径直接显示文件信息，
+所以采取根据协议去拦截的方法
+>uri字符串中的Authority部分为需要显示的文件类型，与2.2获取文件相同可省略，值可以为img、
+
+注意：以下两种协议字符串解析出的结果是不同的
+```html
+//1
+codvision://img//storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
+//2
+codvision://storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
+```
+初看 2 是 1 的省略Authority部分之后的字符串，但解析的结果不一样，
+1 解析后 Authority部分是img, path 是 /storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
+2 解析后 Authority部分是storage，path 是/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
+因为path 是不同的，所以 这样的'省略'Authority部分是不正确的。正确应该是：
+```
+codvision:///storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
+```
 *待根据需求进行补充*
 
 
