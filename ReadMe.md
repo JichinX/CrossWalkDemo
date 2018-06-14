@@ -104,12 +104,12 @@ codvision://sayHello?name=xujichang
 
 2.2 **obtainFile**,获取手机内文件
 ```html
-codvision://obtainFile?type=image&[mine_type=?]
+codvision://obtainFile?type=image&[mime_type=?]
 ```
 说明：   
 >obtainFile 方法标志   
 type为获取文件的类型，其值可以为image、video、audio、txt，其中 image已实现。
-mime_type 可选，表示所需文件的具体类型，若与type冲突，以type为准
+mime_type 可选，表示所需文件的具体类型，若与type冲突，以type为准.
 
 返回数据：   
 正确
@@ -143,7 +143,7 @@ codvision://obtainLocation?type=1
 >obtainLocation 方法标志  
 >type 请求方式   
 >立即请求-表示 取手机中缓存的上次获取的位置信息    
->重新请求-表示 需要重新调用位置获取方法，需要一段时间。
+>重新请求-表示 需要重新调用位置获取方法，需要一段时间后方可返回数据。
 
 返回数据：   
 正确
@@ -171,7 +171,7 @@ codvision://[img|]/...
 说明：     
 因机制原因，并不能根据类似于"/storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg"的路径直接显示文件信息，
 所以采取根据协议去拦截的方法
->uri字符串中的Authority部分为需要显示的文件类型，与2.2获取文件相同可省略，值可以为img、
+>uri字符串中的Authority部分为需要显示的文件类型，与2.2获取文件相同可省略，值可以为img、video、audio、txt.
 
 注意：以下两种协议字符串解析出的结果是不同的
 ```html

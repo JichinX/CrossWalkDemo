@@ -2,6 +2,7 @@ package me.xujichang.crosswalksdk.expose;
 
 import android.content.Context;
 import android.net.Uri;
+import android.widget.Toast;
 
 import org.xwalk.core.XWalkJavascriptResult;
 
@@ -38,14 +39,22 @@ public class DefaultIProtocol implements IProtocol {
             @Override
             public void invoke(Uri uri, XWalkJavascriptResult result) {
                 //测试
-                String query = uri.getQuery();
-                result.confirmWithResult("this str is from Java,and the query from js is :" + query);
+                if (null != result) {
+                    String query = uri.getQuery();
+                    result.confirmWithResult("this str is from Java,and the query from js is :" + query);
+                } else {
+                    Toast.makeText(sWeakReference.get().getContext(), "Uri from js:" + uri, Toast.LENGTH_SHORT).show();
+                }
             }
         };
         //文件
         IProtocolMethod obtainFile = new SimpleProtocolMethod() {
             @Override
             public void invoke(Uri uri, XWalkJavascriptResult result) {
+                if (null == result) {
+                    Toast.makeText(sWeakReference.get().getContext(), "Uri from js:" + uri, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 //获取照片
                 if (EnvironmentCheckUtil.checkContext(sWeakReference)) {
                     IWrapperContext context = sWeakReference.get();
