@@ -12,11 +12,6 @@ import org.xwalk.core.XWalkJavascriptResult;
  */
 public class SimpleProtocolMethod implements IProtocolMethod {
     @Override
-    public void invoke(Uri uri) {
-
-    }
-
-    @Override
     public void invoke(Uri uri, XWalkJavascriptResult result) {
 
     }

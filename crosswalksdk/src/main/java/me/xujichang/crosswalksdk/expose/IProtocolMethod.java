@@ -11,7 +11,5 @@ import org.xwalk.core.XWalkJavascriptResult;
  * created at 2018/6/11 - 11:37
  */
 public interface IProtocolMethod {
-    void invoke(Uri uri);
-
     void invoke(Uri uri, XWalkJavascriptResult result);
 }

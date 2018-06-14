@@ -25,4 +25,8 @@ public interface IWrapperContext {
     void onCameraSelect(long stamp);
 
     void onGotLocation(IAbilityCallBack callBack, LocationType type);
+
+    void onExit(String data);
+
+    void showMessage(String data);
 }

@@ -93,7 +93,7 @@ sayHello为方法名，可以携带参数
 
 *待根据需求进行补充*
 ##### 2. codvision协议
-2.1 sayHello测试：
+###### 2.1 sayHello测试：
 ```js 
 codvision://sayHello?name=xujichang
 ```
@@ -102,7 +102,7 @@ codvision://sayHello?name=xujichang
 >sayHello 为对应方法标志   
 >name=xujichang 表示sayHello对应的方法的参数为name，值为xujichang
 
-2.2 **obtainFile**,获取手机内文件
+###### 2.2 **obtainFile**,获取手机内文件
 ```html
 codvision://obtainFile?type=image&[mime_type=?]
 ```
@@ -135,7 +135,7 @@ mime_type 可选，表示所需文件的具体类型，若与type冲突，以typ
   "msg": "对象或集合为空"
 }
 ```
-2.3 **obtainLocation**获取手机位置信息
+###### 2.3 **obtainLocation**获取手机位置信息
 ```
 codvision://obtainLocation?type=1
 ```
@@ -164,7 +164,7 @@ codvision://obtainLocation?type=1
   "msg": "请求的操作被取消"
 }
 ```
-2.4 显示文件信息
+###### 2.4 显示文件信息
 ```
 codvision://[img|]/...
 ```
@@ -172,8 +172,16 @@ codvision://[img|]/...
 因机制原因，并不能根据类似于"/storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg"的路径直接显示文件信息，
 所以采取根据协议去拦截的方法
 >uri字符串中的Authority部分为需要显示的文件类型，与2.2获取文件相同可省略，值可以为img、video、audio、txt.
-
-注意：以下两种协议字符串解析出的结果是不同的
+###### 2.5 退出Activity
+```html
+codvision://exit?data=XXX
+```
+说明：
+> exit 为方法标志    
+data 为需要返回给Activity的数据  
+对于退出这种单方面的操作，建议使用 跳转URL的方式，比如 `document.location = "codvision://exit"`    
+###### 注意
+1. 以下两种协议字符串解析出的结果是不同的
 ```html
 //1
 codvision://img//storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg

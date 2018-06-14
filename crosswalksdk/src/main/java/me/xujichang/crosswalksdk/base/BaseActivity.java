@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -96,6 +98,12 @@ public class BaseActivity extends SuperActivity implements IWrapperContext {
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
 
+    /**
+     * TODO  需子类实现
+     *
+     * @param callBack
+     * @param type
+     */
     @Override
     public void onGotLocation(IAbilityCallBack callBack, LocationType type) {
         LocationData locationData = new LocationData(120.12313456464, 30.156464);
@@ -107,6 +115,26 @@ public class BaseActivity extends SuperActivity implements IWrapperContext {
 //        } else {
 //
 //        }
+    }
+
+    @Override
+    public void onExit(final String data) {
+        if (Strings.isNullOrEmpty(data)) {
+            finish();
+        } else {
+            showToast(data);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 2000);
+        }
+    }
+
+    @Override
+    public void showMessage(String data) {
+        showToast(data);
     }
 
     @Override

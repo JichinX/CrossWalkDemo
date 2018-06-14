@@ -39,11 +39,14 @@ public class DefaultIProtocol implements IProtocol {
             @Override
             public void invoke(Uri uri, XWalkJavascriptResult result) {
                 //测试
-                if (null != result) {
-                    String query = uri.getQuery();
-                    result.confirmWithResult("this str is from Java,and the query from js is :" + query);
-                } else {
-                    Toast.makeText(sWeakReference.get().getContext(), "Uri from js:" + uri, Toast.LENGTH_SHORT).show();
+                if (EnvironmentCheckUtil.checkContext(sWeakReference)) {
+                    IWrapperContext context = sWeakReference.get();
+                    if (null != result) {
+                        String query = uri.getQuery();
+                        result.confirmWithResult("this str is from Java,and the query from js is :" + query);
+                    } else {
+                        context.showMessage(uri.getQueryParameter("data"));
+                    }
                 }
             }
         };
@@ -51,13 +54,13 @@ public class DefaultIProtocol implements IProtocol {
         IProtocolMethod obtainFile = new SimpleProtocolMethod() {
             @Override
             public void invoke(Uri uri, XWalkJavascriptResult result) {
-                if (null == result) {
-                    Toast.makeText(sWeakReference.get().getContext(), "Uri from js:" + uri, Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 //获取照片
                 if (EnvironmentCheckUtil.checkContext(sWeakReference)) {
                     IWrapperContext context = sWeakReference.get();
+                    if (null == result) {
+                        context.showMessage(uri.getQueryParameter("data"));
+                        return;
+                    }
                     String type = uri.getQueryParameter("type");
                     String mimeType = uri.getQueryParameter("mime_type");
                     new FileAbility.Builder()
@@ -95,6 +98,18 @@ public class DefaultIProtocol implements IProtocol {
                 }
             }
         };
+        //退出
+        IProtocolMethod exit = new SimpleProtocolMethod() {
+            @Override
+            public void invoke(Uri uri, XWalkJavascriptResult result) {
+                if (EnvironmentCheckUtil.checkContext(sWeakReference)) {
+                    IWrapperContext context = sWeakReference.get();
+                    String data = uri.getQueryParameter("data");
+                    context.onExit(data);
+                }
+            }
+        };
+        mMethodMap.put("exit", exit);
         mMethodMap.put("sayHello", sayHello);
         mMethodMap.put("obtainFile", obtainFile);
         mMethodMap.put("obtainLocation", obtainLocation);
