@@ -108,7 +108,7 @@ codvision://obtainFile?type=image&[mine_type=?]
 ```
 说明：   
 >obtainFile 方法标志   
-type为获取文件的类型，其值可以为image、video、audio、txt，其中 image已实现。
+type为获取文件的类型，其值可以为image、video、audio、txt，其中 image已实现     
 mime_type 可选，表示所需文件的具体类型，若与type冲突，以type为准
 
 返回数据：   
@@ -142,8 +142,8 @@ codvision://obtainLocation?type=1
 说明：  
 >obtainLocation 方法标志  
 >type 请求方式   
->立即请求-表示 取手机中缓存的上次获取的位置信息    
->重新请求-表示 需要重新调用位置获取方法，需要一段时间。
+>0 立即请求-表示 取手机中缓存的上次获取的位置信息    
+>1 重新请求-表示 需要重新调用位置获取方法，需要一段时间。
 
 返回数据：   
 正确
@@ -180,10 +180,10 @@ codvision://img//storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
 //2
 codvision://storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
 ```
-初看 2 是 1 的省略Authority部分之后的字符串，但解析的结果不一样，
-1 解析后 Authority部分是img, path 是 /storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
-2 解析后 Authority部分是storage，path 是/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
-因为path 是不同的，所以 这样的'省略'Authority部分是不正确的。正确应该是：
+初看 2 是 1 的省略Authority部分之后的字符串，但解析的结果不一样     
+1 解析后 Authority部分是img, path 是 /storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg       
+2 解析后 Authority部分是storage，path 是/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg     
+因为path 是不同的，所以 这样的'省略'Authority部分是不正确的。正确应该是：       
 ```
 codvision:///storage/emulated/0/DCIM/Camera/IMG_20180515_111539.jpg
 ```
