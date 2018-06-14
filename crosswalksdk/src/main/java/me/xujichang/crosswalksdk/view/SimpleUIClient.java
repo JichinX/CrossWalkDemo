@@ -37,4 +37,5 @@ class SimpleUIClient extends XWalkUIClient {
         }
         return super.onJsPrompt(view, url, message, defaultValue, result);
     }
+
 }

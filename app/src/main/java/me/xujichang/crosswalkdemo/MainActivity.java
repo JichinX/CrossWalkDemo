@@ -11,7 +11,6 @@ import me.xujichang.crosswalksdk.view.XWebViewActivity;
 
 public class MainActivity extends AppCompatActivity {
     private EditText etUrl;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

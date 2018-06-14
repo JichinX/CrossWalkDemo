@@ -3,6 +3,7 @@ package me.xujichang.crosswalksdk.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import org.xwalk.core.XWalkNavigationHistory;
@@ -16,11 +17,14 @@ import java.net.CookieManager;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.xujichang.crosswalksdk.base.BaseActivity;
+import me.xujichang.crosswalksdk.bean.Const;
 import me.xujichang.crosswalksdk.expose.DefaultIProtocol;
 import me.xujichang.crosswalksdk.expose.DefaultJsExpose;
 import me.xujichang.crosswalksdk.expose.IProtocol;
 import me.xujichang.crosswalksdk.widget.XWebView;
 import me.xujichang.util.activity.SuperActivity;
+import me.xujichang.util.tool.LogTool;
 
 
 /**
@@ -30,7 +34,7 @@ import me.xujichang.util.activity.SuperActivity;
  * @author xujichang
  * created at 2018/6/7 - 09:57
  */
-public abstract class XWebViewBaseActivity extends SuperActivity {
+public abstract class XWebViewBaseActivity extends BaseActivity {
     private static XWebView mWebView;
     private static final Map<String, IProtocol> schemesMap = new HashMap<>();
 
@@ -50,12 +54,6 @@ public abstract class XWebViewBaseActivity extends SuperActivity {
         generateWalkPreferences();
         CookieManager cookieManager = new CookieManager();
         onGotCookieManager(cookieManager);
-    }
-
-
-    @Override
-    protected long getActivityExitDuration() {
-        return 1000;
     }
 
     //==============================loadUrl=====================
@@ -100,7 +98,7 @@ public abstract class XWebViewBaseActivity extends SuperActivity {
         mWebView = webView;
         //=====================通信协议设置=======================
         //添加协议
-        schemesMap.put(DefaultIProtocol.PROTOCOL_NAME, new DefaultIProtocol());
+        schemesMap.put(DefaultIProtocol.PROTOCOL_NAME, new DefaultIProtocol(this));
         //添加自定义的协议
         if (null != schemes && schemes.size() > 0) {
             for (Map.Entry<String, IProtocol> entry : schemes.entrySet()) {
@@ -145,6 +143,10 @@ public abstract class XWebViewBaseActivity extends SuperActivity {
         settings.setSupportSpatialNavigation(true);
         settings.setBuiltInZoomControls(true);
         settings.setSupportZoom(true);
+        //允许webview对文件的操作
+        settings.setAllowUniversalAccessFromFileURLs(true);
+        settings.setAllowFileAccess(true);
+        settings.setAllowFileAccessFromFileURLs(true);
     }
 
 
