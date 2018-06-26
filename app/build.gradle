@@ -13,10 +13,10 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "me.xujichang.crosswalkdemo"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 27
-        versionCode 10102
-        versionName "1.0.1.2"
+        versionCode 10107
+        versionName "1.0.1.7"
         multiDexEnabled true
     }
     buildTypes {

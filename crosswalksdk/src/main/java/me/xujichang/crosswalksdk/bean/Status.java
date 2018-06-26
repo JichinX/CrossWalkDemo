@@ -21,7 +21,7 @@ public enum Status {
      */NONE(300, "对象或集合为空"),
     /**
      * 取消
-     */CANCEL(100, "请求的操作被取消");
+     */CANCEL(100, "请求的操作被取消"), NO_SUCH_METHOD(0, "没有对应解析方法");
     private int code;
     private String msg;
 

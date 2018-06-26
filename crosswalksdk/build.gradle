@@ -10,7 +10,7 @@ repositories {
 android {
     compileSdkVersion 27
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -60,3 +60,4 @@ dependencies {
     //viewModel
     implementation "android.arch.lifecycle:viewmodel:1.1.0"
 }
+apply from: 'publish.gradle'

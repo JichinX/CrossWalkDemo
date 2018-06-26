@@ -30,6 +30,7 @@ public class XWebViewActivity extends XWebViewBaseActivity {
         setContentView(R.layout.activity_webview);
         mProgressBar = findViewById(R.id.bar_progress);
         mWebView = findViewById(R.id.web_view);
+        mWebView.requestFocus();
         setWebView(mWebView);
         initActionBar();
         loadUrl(url);
@@ -60,7 +61,7 @@ public class XWebViewActivity extends XWebViewBaseActivity {
 
     @Override
     protected XWalkUIClient onSetUIClient() {
-        SimpleUIClient uiClient = new SimpleUIClient(mWebView, getSchemesMap()) {
+        SimpleUIClient uiClient = new SimpleUIClient(mWebView, getSchemesMap(), this) {
             @Override
             public void onReceivedTitle(XWalkView view, String title) {
                 super.onReceivedTitle(view, title);

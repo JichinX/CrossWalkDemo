@@ -1,10 +1,13 @@
 package me.xujichang.crosswalksdk.view;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.webkit.ValueCallback;
+
+import com.google.common.base.Strings;
 
 import org.xwalk.core.XWalkNavigationHistory;
 import org.xwalk.core.XWalkPreferences;
@@ -18,13 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.xujichang.crosswalksdk.base.BaseActivity;
-import me.xujichang.crosswalksdk.bean.Const;
 import me.xujichang.crosswalksdk.expose.DefaultIProtocol;
 import me.xujichang.crosswalksdk.expose.DefaultJsExpose;
 import me.xujichang.crosswalksdk.expose.IProtocol;
 import me.xujichang.crosswalksdk.widget.XWebView;
-import me.xujichang.util.activity.SuperActivity;
-import me.xujichang.util.tool.LogTool;
 
 
 /**
@@ -34,9 +34,11 @@ import me.xujichang.util.tool.LogTool;
  * @author xujichang
  * created at 2018/6/7 - 09:57
  */
-public abstract class XWebViewBaseActivity extends BaseActivity {
+public abstract class XWebViewBaseActivity extends BaseActivity implements SimpleUIClient.FileChooseCallBack {
+    private static final int FILE_SELECTED = 1000;
     private static XWebView mWebView;
     private static final Map<String, IProtocol> schemesMap = new HashMap<>();
+    private ValueCallback<Uri> mUriValueCallback;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -231,6 +233,33 @@ public abstract class XWebViewBaseActivity extends BaseActivity {
     }
 
     protected XWalkUIClient onSetUIClient() {
-        return new SimpleUIClient(mWebView, getSchemesMap());
+        return new SimpleUIClient(mWebView, getSchemesMap(), this);
+    }
+
+    @Override
+    public void openFileChooser(XWalkView view, ValueCallback<Uri> uploadFile, String acceptType, String capture) {
+        //文件获取处置
+        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+        i.addCategory(Intent.CATEGORY_OPENABLE);
+        String type = acceptType;
+        if (Strings.isNullOrEmpty(acceptType)) {
+            acceptType = "*/*";
+        }
+        i.setType(acceptType);
+        mUriValueCallback = uploadFile;
+        startActivityForResult(Intent.createChooser(i, "选择图片"), FILE_SELECTED);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == FILE_SELECTED) {
+            Uri uri = null;
+            if (resultCode == RESULT_OK) {
+                uri = data.getData();
+            }
+            mUriValueCallback.onReceiveValue(uri);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

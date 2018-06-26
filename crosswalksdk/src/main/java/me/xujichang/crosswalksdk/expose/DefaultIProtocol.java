@@ -16,6 +16,8 @@ import me.xujichang.crosswalksdk.ability.file.FileType;
 import me.xujichang.crosswalksdk.ability.location.LocationAbility;
 import me.xujichang.crosswalksdk.base.IWrapperContext;
 import me.xujichang.crosswalksdk.bean.LocationType;
+import me.xujichang.crosswalksdk.bean.Status;
+import me.xujichang.crosswalksdk.bean.WrapperResult;
 import me.xujichang.crosswalksdk.utils.EnvironmentCheckUtil;
 
 /**
@@ -131,7 +133,9 @@ public class DefaultIProtocol implements IProtocol {
         if (mMethodMap.containsKey(methodName)) {
             mMethodMap.get(methodName).invoke(uri, result);
         } else {
-            throw new RuntimeException("No such method :" + methodName);
+            WrapperResult<String> wrapperResult = new WrapperResult<>(Status.NO_SUCH_METHOD);
+            wrapperResult.setData("class: " + getClass().getSimpleName() + " uri:" + uri);
+            result.confirmWithResult(wrapperResult.toString());
         }
     }
 

@@ -45,19 +45,27 @@
 
     }
     function obtainImage() {
-      let result = prompt("codvision://obtainFile?type=image");
-      console.log(result)
-      let obj = eval("(" + result + ")")
-      let data = obj.data
-      let path = data.locPath
-      console.log(path)
-      // alert(obj)
+      // let result = prompt("codvision://obtainFile?type=image");
+      // console.log(result)
+
+      // let obj = eval("(" + result + ")")
       // let data = obj.data
-      // alert(data)
-      // let path = data.locPath;
-      // alert(path);
+      // let path = data.locPath
+      // console.log(path)
+      // // alert(obj)
+      // // let data = obj.data
+      // // alert(data)
+      // // let path = data.locPath;
+      // // alert(path);
       var img = document.getElementById("img");
-      img.src = "codvision://" + path;
+      // img.src = "codvision://" + path;
+      img.src = "codvision://img/" + path;
+      // let result = prompt("codvision://obtainFile?type=image");
+      // const imgPath = JSON.parse(result);
+      // alert('codvision://img/' + imgPath.data.locPath);
+      // let imgResult = prompt('codvision://img/' + imgPath.data.locPath);
+      // alert(imgResult);
+
     }
     function obtainLocation() {
       let result = prompt("codvision://obtainLocation");
@@ -93,6 +101,16 @@
     <button onclick="obtainImage()">obtainImage</button>
     <button onclick="obtainLocation()">obtainLocation</button>
   </div>
+  <br/>
+  <div class="center">
+    <!-- <input type="image" name="input image" /> -->
+    <input type="file" name="input file" accept="image/*" />
+    <!--accept="image/*" 可以用来限制符合条件的文件类型 具体可参考 http://www.w3school.com.cn/media/media_mimeref.asp -->
+    <!-- <input type="image" name="input file" accept="image" /> -->
+
+    <input type="text" name="input text" />
+  </div>
+
   <div class="center">
     <button onclick="exit()">exit()</button>
   </div>

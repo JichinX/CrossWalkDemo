@@ -18,7 +18,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.google.common.base.Strings;
-import com.google.gson.Gson;
 
 import java.io.File;
 
@@ -36,8 +35,8 @@ import me.xujichang.crosswalksdk.utils.FileUtil;
 import me.xujichang.util.activity.SuperActivity;
 import me.xujichang.util.tool.GlideTool;
 
-import static me.xujichang.crosswalksdk.bean.Const.ALBUM_REQUEST_CODE;
-import static me.xujichang.crosswalksdk.bean.Const.CAMERA_REQUEST_CODE;
+import static me.xujichang.crosswalksdk.bean.CrossWalkSdkConst.ALBUM_REQUEST_CODE;
+import static me.xujichang.crosswalksdk.bean.CrossWalkSdkConst.CAMERA_REQUEST_CODE;
 
 /**
  * Des:

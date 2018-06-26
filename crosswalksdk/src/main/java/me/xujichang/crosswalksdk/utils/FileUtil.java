@@ -84,7 +84,7 @@ public class FileUtil {
     public static Uri getUriFromFile(Context context, File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //适配7.0 之后 版本
-            return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+            return FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
         } else {
             return Uri.fromFile(file);
         }
