@@ -1,1 +1,1 @@
-include ':app', ':crosswalksdk'
+include ':app', ':crosswalksdk', ':webviewsdk'
